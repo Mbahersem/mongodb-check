@@ -9,7 +9,6 @@ const token = process.env.TOKEN;
 ngrok.connect()
 .then(url => {
     bot.setWebHook(`${url}/bot${token}`);
-    return url;
 }).catch(err => {
     console.error(err);
 });
