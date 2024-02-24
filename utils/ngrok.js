@@ -1,6 +1,6 @@
 const ngrok = require('@ngrok/ngrok');
 
-exports.connect = async function() {
+connect = async function() {
     try {
         const listener = await ngrok.forward({addr: 8080, authtoken_from_env: true});
         return listener.url();
@@ -9,11 +9,12 @@ exports.connect = async function() {
     }
 }
 
-exports.close = async function() {
+close = async function() {
     try {
-        const listener = await ngrok.getListenerByUrl(url);
-        await listener.close();
+        await ngrok.disconnect();
     } catch (err) {
         console.error(err);
     }
 }
+
+module.exports = {connect, close};

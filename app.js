@@ -1,12 +1,12 @@
 const express = require('express');
 const bot = require('./utils/bot');
-const ngrok = require('./utils/ngrok');
+const { connect } = require('./utils/ngrok');
 const dotenv = require('dotenv');
 
 dotenv.config({path: '../.env'});
 
 const token = process.env.TOKEN;
-ngrok.connect()
+connect()
 .then(url => {
     bot.setWebHook(`${url}/bot${token}`);
 }).catch(err => {
