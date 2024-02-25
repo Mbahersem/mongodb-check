@@ -42,6 +42,19 @@ class Mongo {
 
         return docs;
     }
+
+    createCollec = async(name) => {
+        const db = this.client.db();
+        const collection = await db.createCollection(name);
+        console.log(collection);
+    }
+
+    createDocument = async(name, doc) => {
+        const db = this.client.db();
+        const collection = db.collection(name);
+
+        await collection.insertOne(doc);
+    }
 }
 
 module.exports = Mongo;
