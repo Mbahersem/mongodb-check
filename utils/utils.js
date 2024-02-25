@@ -20,7 +20,7 @@ exports.encodeMessage = (message) => {
 exports.formatList = (tab) =>  {
     let list = '';
     for(let i = 0; i < tab.length; i++) {
-        list += `${i+1}. ${tab[i]}\n`;
+        list += `${i+1}\\. ${tab[i]}\n`;
     }
     return list;
 }

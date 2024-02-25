@@ -27,7 +27,12 @@ connectDB().then(client =>  {
     bot.setMyCommands(commands);
     
     bot.onText(/\/start/, (msg) => {
-        bot.sendMessage(msg.chat.id, "Connecté à la BD !");
+        let text = `Bienvenue sur le bot connecté à ${mongo.getDbName()}\\.\n\n *Il te permettra de :*\n1\\. /list\\_collections : Lister toutes les collections\\.` +
+        `\n2\\. /create\\_document : Insérer des documents dans la collection\\.\n3\\. /list\\_documents : Avoir la liste des documents\\.` +
+        `\n4\\. /about : D'en apprendre sur moi 😌\\.\n\n` +
+        `Tout est partie d'une idée pour apprendre 😉\\.`
+
+        bot.sendMessage(msg.chat.id, text, {parse_mode: 'MarkdownV2'});
     });
     
     bot.onText(/\/list_collections/, (msg) => {
@@ -36,7 +41,7 @@ connectDB().then(client =>  {
             const keyboard = utils.keyboardFromArray(collections);
             const list = utils.formatList(collections);
             bot.sendMessage(msg.chat.id, `Liste des collections :\n${list}`, {
-                "parse_mode": 'Markdown',
+                "parse_mode": 'MarkdownV2',
                 "reply_markup": {
                     "keyboard": keyboard
                 }
@@ -63,6 +68,11 @@ connectDB().then(client =>  {
     bot.onText(/\/create_document/, (msg) => {
         command = CREATE_DOCUMENT;
         bot.sendMessage(msg.chat.id, "Mode d'ajout de documents, envoyez...");
+    });
+
+    bot.onText(/\/about/, (msg) => {
+        let text = `Développé par *Mbahersem*, disponible sur [ce dépôt](https://github\\.com/Mbahersem/mongodb-check\\.git)\\.`
+        bot.sendMessage(msg.chat.id, text, {parse_mode: 'MarkdownV2'});
     });
 
     bot.on('message', (msg) => {
@@ -99,9 +109,6 @@ connectDB().then(client =>  {
                             }
                         }
                     });
-                    break;
-                case LIST_DOCUMENTS :
-                    bot.sendMessage(msg.chat.id, 'Go...');
                     break;
             }
         }
